@@ -75,7 +75,6 @@ public function login(Request $request)
             'data'    => [
                 'user'  => $user,
                 'token' => $token,
-                'role'  => $user->role,
             ],
             'error' => null,
         ], 200);
