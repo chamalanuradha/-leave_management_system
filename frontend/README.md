@@ -1,12 +1,37 @@
-# React + Vite
+# Leave Management – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is the frontend of a **User Login and Leave Management System**, built with **React** and **Vite**. It connects with a Laravel backend API to manage user interactions such as:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Login & Registration**
+- **Leave Request Submission**
+- **View Leave History & Status**
+- **Admin Leave Approval/Reject Interface**
 
-## Expanding the ESLint configuration
+The frontend provides a clean and responsive UI using **Tailwind CSS** and performs API communication using **Axios**.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🔧 Frontend Technologies Used
+
+- **React** – JavaScript library for building user interfaces.
+- **Vite** – Build tool for faster frontend development.
+- **Tailwind CSS** – Utility-first CSS framework for styling.
+- **Axios** – Promise-based HTTP client for API requests.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js >= 18.x
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/chamalanuradha/-leave_management_system
+   cd frontend

@@ -27,7 +27,7 @@ public function register(Request $request)
         $token = $user->createToken('API Token')->accessToken;
 
         return response()->json([
-            'status'  => true,
+            'status'  => 'success',
             'message' => 'User registered successfully.',
             'data'    => [
                 'user'  => $user,
@@ -40,7 +40,7 @@ public function register(Request $request)
         \Log::error($e->getMessage());
 
         return response()->json([
-            'status'  => false,
+            'status'  => 'fail',
             'message' => 'Registration failed.',
             'data'    => null,
             'error'   => $e->getMessage(),
@@ -83,7 +83,7 @@ public function login(Request $request)
         \Log::error($e->getMessage());
 
         return response()->json([
-            'status'  => 'error',
+            'status'  => 'fail',
             'message' => 'Login failed',
             'data'    => null,
             'error'   => $e->getMessage(),

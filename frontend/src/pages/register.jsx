@@ -47,15 +47,16 @@ const Register = () => {
     if (!validate()) return;
 
     try {
-      const response = await fetch("http://localhost:8000/api/register", {
+      const res = await fetch("http://localhost:8000/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result = await res.json();
+      console.log(result)
 
-      if (response.ok) {
+      if (result.status === "success") {
         setMessage("✅ Registered successfully! Redirecting...");
         setFormData({
           name: "",
@@ -65,7 +66,7 @@ const Register = () => {
         });
         setErrors({});
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 1500);
       } else {
         setMessage(result.error || result.message);
