@@ -62,7 +62,7 @@ public function login(Request $request)
                 'status'  => 'fail',
                 'message' => 'Unauthorized',
                 'data'    => null,
-                'error'   => 'Invalid credentials',
+                'error'   => 'Invalid Credentials',
             ], 401);
         }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navbar";
 
 export default function LeaveForm() {
   const [form, setForm] = useState({
@@ -29,7 +30,7 @@ export default function LeaveForm() {
         setError("");
         // Optional: navigate or reset form
         setForm({ leave_date: "", leave_type: "", reason: "" });
-        navigate("/userdashboard");
+        navigate("/leave");
       } else {
         setError(res.data.error || "Submission failed.");
       }
@@ -39,7 +40,9 @@ export default function LeaveForm() {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white rounded-lg shadow-md mt-10">
+    <div>
+            <Navbar/>
+   <div className="p-6 max-w-xl mx-auto bg-white rounded-lg shadow-md mt-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Request Leave</h2>
 
       {message && <p className="text-green-600 text-center mb-4">{message}</p>}
@@ -81,5 +84,7 @@ export default function LeaveForm() {
         </button>
       </form>
     </div>
+    </div>
+ 
   );
 }

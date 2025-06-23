@@ -4,21 +4,73 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import AdminDashboard from "./pages/admindashboard";
 import LeaveForm from "./pages/leaveform";
+import LeaveUser from "./pages/leave";
+import AdminLeave from "./pages/adminleave";
+
+// Protected Route wrapper
+function PrivateRoute({ children, role }) {
+  const token = localStorage.getItem("token");
+  const storedRole = localStorage.getItem("role");
+
+  if (!token || storedRole !== role) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+}
 
 function App() {
-  const token = localStorage.getItem("token");
-  const role = JSON.parse(localStorage.getItem("user"))?.role || "";
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register/>} />
-     {/* Authenticated user dashboards */}
-        <Route path="/userdashboard" element={token && role === "USER" ? <Dashboard /> : <Navigate to="/" />} />
-        <Route path="/admindashboard" element={token && role === "ADMIN" ? <AdminDashboard /> : <Navigate to="/" />} />
-        {/* Leave form accessible by logged-in users */}
-        <Route path="/leaveform" element={token ? <LeaveForm /> : <Navigate to="/" />} />   
+        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/userdashboard"
+          element={
+            <PrivateRoute role="USER">
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admindashboard"
+          element={
+            <PrivateRoute role="ADMIN">
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/leave"
+          element={
+            <PrivateRoute role="USER">
+              <LeaveUser />
+            </PrivateRoute>
+          }
+        />
+
+          <Route
+          path="/adminleave"
+          element={
+            <PrivateRoute role="ADMIN">
+              <AdminLeave />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/leaveform"
+          element={
+            localStorage.getItem("token") ? (
+              <LeaveForm />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
