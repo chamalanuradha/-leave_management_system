@@ -30,12 +30,13 @@ The backend exposes REST
 - MySQL
 - Node.js & NPM (if frontend or API docs included)
 
-### Installation
+### Importent 
 
-1. Clone the repository:
+1. Run to Backend
    ```bash
    git clone https://github.com/chamalanuradha/-leave_management_system
-   cd backend
+   ```
+
 
 2. Database Credintials 
 
