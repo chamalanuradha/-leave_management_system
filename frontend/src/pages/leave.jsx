@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api"; 
 import Navbar from "../components/navbar";
-import Loader from "../components/loader"; // import here
+import Loader from "../components/loader";
 
 const Dashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));

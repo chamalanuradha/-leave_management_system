@@ -7,11 +7,10 @@ const Dashboard = () => {
   return (
     <div>
       <Navbar/>
-    <div className="p-6 max-w-4xl mx-auto mt-10">
-      
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        Welcome, {user?.role} {user?.name || "User"}
-      </h2>
+      <div className="p-6 max-w-9xl mx-auto mt-10">
+        <h2 className="text-3xl font-bold mb-6">
+          👋 Welcome, {user?.name || "Admin"}({user?.role} )
+        </h2>
     </div>
     </div>
 

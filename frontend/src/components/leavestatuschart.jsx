@@ -1,6 +1,7 @@
 import { Pie } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { api } from '../services/api';
+import Loader from '../components/loader';
 
 import {
   Chart as ChartJS,
@@ -51,7 +52,7 @@ export default function LeaveStatusChart() {
     });
   }, []);
 
-  if (!chartData) return <p>Loading Chart...</p>;
+  if (!chartData) return <div className="flex justify-center items-center h-96"><Loader /></div>;
 
   return (
     <div className="max-w-md mx-auto" style={{ width: 400, height: 400 }}>

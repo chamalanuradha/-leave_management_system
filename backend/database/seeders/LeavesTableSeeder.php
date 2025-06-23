@@ -5,29 +5,28 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Leave;
+use Carbon\Carbon;
 
 class LeavesTableSeeder extends Seeder
 {
     public function run()
     {
-     
-        $employee = User::where('role', 'USER')->first();
+        $users = User::where('role', 'USER')->get();
 
-        if ($employee) {
-            Leave::create([
-                'user_id' => $employee->id,
-                'leave_date' => now()->addDays(3)->format('Y-m-d'),
-                'leave_type' => 'CASUAL',
-                'status' => 'PENDING',
-                'reason' => 'Family event',
-            ]);
+        // Define leave types
+        $leaveTypes = ['CASUAL', 'SICK', 'ANNUAL'];
+        $statuses = ['PENDING', 'APPROVED', 'REJECTED'];
+        $reasons = ['Family event', 'Medical appointment', 'Vacation', 'Emergency', 'Personal reason'];
 
+        // Loop and assign 10 leaves randomly to users
+        for ($i = 0; $i < 10; $i++) {
+            $user = $users->random();
             Leave::create([
-                'user_id' => $employee->id,
-                'leave_date' => now()->addDays(7)->format('Y-m-d'),
-                'leave_type' => 'SICK',
-                'status' => 'PENDING',
-                'reason' => 'Medical appointment',
+                'user_id' => $user->id,
+                'leave_date' => Carbon::now()->addDays(rand(1, 30))->format('Y-m-d'),
+                'leave_type' => $leaveTypes[array_rand($leaveTypes)],
+                'status' => $statuses[array_rand($statuses)],
+                'reason' => $reasons[array_rand($reasons)],
             ]);
         }
     }

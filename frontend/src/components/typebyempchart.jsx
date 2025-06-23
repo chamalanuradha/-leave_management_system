@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-
+import Loader from "../components/loader";
 
 import {
   Chart as ChartJS,
@@ -23,7 +23,6 @@ export default function LeaveTypePerUserChart() {
     api.get('/leaves/type-per-user').then(res => {
       const data = res.data.data; 
 
-     s
       const allTypes = new Set();
       data.forEach(user => {
         user.types.forEach(t => allTypes.add(t.type));
@@ -46,7 +45,7 @@ export default function LeaveTypePerUserChart() {
     });
   }, []);
 
-  if (!chartData) return <p>Loading Chart...</p>;
+  if (!chartData) return <div className="flex justify-center items-center h-96"><Loader /></div>;
 
   return (
     <div className="max-w-4xl mx-auto mt-10">
