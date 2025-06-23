@@ -13,12 +13,12 @@ class LeavesTableSeeder extends Seeder
     {
         $users = User::where('role', 'USER')->get();
 
-        // Define leave types
+       
         $leaveTypes = ['CASUAL', 'SICK', 'ANNUAL'];
         $statuses = ['PENDING', 'APPROVED', 'REJECTED'];
         $reasons = ['Family event', 'Medical appointment', 'Vacation', 'Emergency', 'Personal reason'];
 
-        // Loop and assign 10 leaves randomly to users
+      
         for ($i = 0; $i < 10; $i++) {
             $user = $users->random();
             Leave::create([
