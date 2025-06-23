@@ -352,6 +352,119 @@ Authorization: Bearer {access_token}
 
 ```
 
+
+## GET /api/leaves/status-summary
+
+### Request
+```bash
+GET /api/leaves/status-summary
+Authorization: Bearer {access_token}
+```
+### Response(Success)
+```bash
+{
+  "status": "success",
+  "message": "Leave status summary fetched successfully.",
+  "data": [
+    {
+      "status": "APPROVED",
+      "total": 3
+    },
+    {
+      "status": "PENDING",
+      "total": 5
+    },
+    {
+      "status": "REJECTED",
+      "total": 2
+    }
+  ],
+  "error": null
+}
+
+```
+### Response(fail)
+```bash
+{
+  "status": "fail",
+  "message": "Unauthorized: Only admins can access this chart.",
+  "data": null,
+  "error": "Access denied"
+}
+```
+```bash
+{
+  "status": "fail",
+  "message": "Failed to fetch summary.",
+  "data": null,
+  "error": "SQLSTATE[42S22]: Column not found: ..."
+}
+
+```
+
+## GET /api/leaves/type-per-users
+
+### Request
+```bash
+GET /api/leaves/type-per-usersy
+Authorization: Bearer {access_token}
+```
+### Response(Success)
+```bash
+{
+  "status": "success",
+  "message": "Leave types by user fetched successfully.",
+  "data": [
+    {
+      "user": "Employee One",
+      "types": [
+        {
+          "type": "CASUAL",
+          "count": 2
+        },
+        {
+          "type": "SICK",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "user": "Employee Two",
+      "types": [
+        {
+          "type": "CASUAL",
+          "count": 1
+        },
+        {
+          "type": "ANNUAL",
+          "count": 3
+        }
+      ]
+    }
+  ],
+  "error": null
+}
+
+```
+### Response(fail)
+```bash
+{
+  "status": "fail",
+  "message": "Unauthorized: Only admins can access this chart.",
+  "data": null,
+  "error": "Access denied"
+}
+
+```
+```bash
+{
+  "status": "fail",
+  "message": "Failed to fetch leave types.",
+  "data": null,
+  "error": "SQLSTATE[42S22]: Column not found: ..."
+}
+```
+
 4. Default credentials:
 
 ## Admin:
