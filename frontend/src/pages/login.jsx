@@ -20,7 +20,6 @@ const handleSubmit = async (e) => {
 
       alert(res.data.message || "Login successful");
 
-      // ✅ Navigate based on role
       if (user.role === 'ADMIN') {
         navigate('/admindashboard');
       } else if (user.role === 'USER') {
