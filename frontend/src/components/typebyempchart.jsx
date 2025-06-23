@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
-// Import and register Chart.js components
+
 import {
   Chart as ChartJS,
-  CategoryScale,   // for "category" scale (x-axis labels)
-  LinearScale,     // for numeric y-axis
-  BarElement,      // for bars in bar chart
+  CategoryScale,  
+  LinearScale,     
+  BarElement,     
   Title,
   Tooltip,
   Legend,
@@ -21,25 +21,25 @@ export default function LeaveTypePerUserChart() {
 
   useEffect(() => {
     api.get('/leaves/type-per-user').then(res => {
-      const data = res.data.data; // array of { user, types: [{ type, count }] }
+      const data = res.data.data; 
 
-      // Get unique leave types across all users
+     s
       const allTypes = new Set();
       data.forEach(user => {
         user.types.forEach(t => allTypes.add(t.type));
       });
 
-      const leaveTypes = [...allTypes]; // unique leave types
-      const labels = data.map(user => user.user); // user names for x-axis
+      const leaveTypes = [...allTypes]; 
+      const labels = data.map(user => user.user); 
 
-      // Build datasets for each leave type
+
       const datasets = leaveTypes.map(type => ({
         label: type,
         data: data.map(user => {
           const match = user.types.find(t => t.type === type);
           return match ? match.count : 0;
         }),
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`, // random color with padding
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`, 
       }));
 
       setChartData({ labels, datasets });

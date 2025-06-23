@@ -21,7 +21,7 @@ const options = {
   },
 };
 
-// Helper function to generate a random hex color string
+
 function getRandomColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 }
@@ -36,7 +36,7 @@ export default function LeaveStatusChart() {
       const labels = data.map(item => item.status);
       const totals = data.map(item => item.total);
 
-      // Generate an array of random colors equal to the number of statuses
+     
       const backgroundColors = labels.map(() => getRandomColor());
 
       setChartData({
