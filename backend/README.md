@@ -354,7 +354,6 @@ Authorization: Bearer {access_token}
 
 4. Default credentials:
 
-
 ## Admin:
 Email: admin@example.com
 Password: password
@@ -362,3 +361,28 @@ Password: password
 ## Employee:
 Email: employee1@example.com
 Password: password
+
+5. Database Seeding
+
+To quickly populate the database with initial data for testing and development, this project uses Laravel seeders.
+
+Seeders Included
+UsersTableSeeder: Creates sample users, including:
+
+An Admin User with role ADMIN
+
+An Employee User with role USER
+
+LeavesTableSeeder: (Assumed) Creates sample leave records associated with users.
+
+How to Run Seeders
+After setting up your database and running migrations, run 
+
+```bash
+php artisan db:seed
+```
+
+This will execute the DatabaseSeeder, which calls the individual seeders in this order:
+
+1. UsersTableSeeder – seeds users first (important for relational integrity)
+2. LeavesTableSeeder – seeds leave requests linked to the seeded users
