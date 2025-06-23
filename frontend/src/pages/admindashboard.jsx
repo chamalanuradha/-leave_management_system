@@ -1,59 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../services/api";
 import Navbar from "../components/navbar";
+import LeaveStatusChart from "../components/leavestatuschart";
+import LeaveTypePerUserChart from "../components/typebyempchart";
 
 const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate();
-  const [leaves, setLeaves] = useState([]);
-  const [error, setError] = useState("");
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/";
-  };
-
-  const fetchLeaves = async () => {
-    try {
-      const res = await api.get("/leaves");
-      if (res.data.status === "success") {
-        setLeaves(res.data.data);
-      } else {
-        setError("Failed to load leaves");
-      }
-    } catch (err) {
-      setError(err.response?.data?.error || "Error fetching leaves");
-    }
-  };
-
-  const updateStatus = async (id, status) => {
-    try {
-      const res = await api.put(`/leaves/${id}`, { status });
-      if (res.data.status === "success") {
-        // Refresh leaves list
-        fetchLeaves();
-      }
-    } catch (err) {
-      alert(err.response?.data?.error || "Status update failed");
-    }
-  };
-
-  useEffect(() => {
-    fetchLeaves();
-  }, []);
 
   return (
     <div>
       <Navbar />
-        <div className="p-6 max-w-6xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-6">
-        Welcome, {user?.role} {user?.name || "Admin"}
-      </h2>
+      <div className="p-6 max-w-9xl mx-auto mt-10">
+        <h2 className="text-3xl font-bold mb-6">
+          👋 Welcome, {user?.name || "Admin"}({user?.role} )
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-3">
+          {/* Chart for Approved vs Rejected */}
+          <div className="bg-white shadow-md p-4 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Leave Status Summary</h3>
+            <LeaveStatusChart />
+          </div>
+
+          {/* Chart for Leave Types per Employee */}
+          <div className="bg-white shadow-md p-4 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Leave Types by Employee</h3>
+            <LeaveTypePerUserChart />
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-  
   );
 };
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\DB;
+
 
 class LeaveController extends Controller
 {
@@ -43,8 +45,7 @@ public function index()
             'error' => $e->getMessage()
         ], 500);
     }
-}
-   
+}  
 public function myLeaves()
 {
     try {
@@ -69,7 +70,6 @@ public function myLeaves()
         ], 500);
     }
 }
-
 
 public function store(Request $request)
 {
@@ -153,4 +153,91 @@ public function update(Request $request, $id)
         ], 500);
     }
 }
+
+
+
+public function leaveStatusSummary()
+{
+    try {
+        if (Auth::user()->role !== 'ADMIN') {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Unauthorized: Only admins can access this chart.',
+                'data' => null,
+                'error' => 'Access denied'
+            ], 403);
+        }
+
+        $summary = Leave::select('status', DB::raw('count(*) as total'))
+                        ->groupBy('status')
+                        ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Leave status summary fetched successfully.',
+            'data' => $summary,
+            'error' => null
+        ], 200);
+
+    } catch (\Exception $e) {
+        \Log::error('Error fetching leave status summary: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Failed to fetch summary.',
+            'data' => null,
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+public function leaveTypePerUser()
+{
+    try {
+        if (Auth::user()->role !== 'ADMIN') {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Unauthorized: Only admins can access this chart.',
+                'data' => null,
+                'error' => 'Access denied'
+            ], 403);
+        }
+
+        $data = Leave::with('user')
+            ->select('user_id', 'leave_type', DB::raw('count(*) as total'))
+            ->groupBy('user_id', 'leave_type')
+            ->get()
+            ->groupBy('user_id')
+            ->map(function ($leaves, $userId) {
+                return [
+                    'user' => $leaves->first()->user->name,
+                    'types' => $leaves->map(function ($leave) {
+                        return [
+                            'type' => $leave->leave_type,
+                            'count' => $leave->total
+                        ];
+                    })->values()
+                ];
+            })->values();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Leave types by user fetched successfully.',
+            'data' => $data,
+            'error' => null
+        ], 200);
+
+    } catch (\Exception $e) {
+        \Log::error('Error fetching leave types per user: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Failed to fetch leave types.',
+            'data' => null,
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+
 }

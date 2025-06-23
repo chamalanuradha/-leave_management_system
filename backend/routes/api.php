@@ -14,4 +14,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/leaves', [LeaveController::class, 'store']);
     Route::get('/my-leaves', [LeaveController::class, 'myLeaves']);
     Route::put('/leaves/{id}', [LeaveController::class, 'update']);
+
+
+    Route::get('/leaves/status-summary', [LeaveController::class, 'leaveStatusSummary']);
+    Route::get('/leaves/type-per-user', [LeaveController::class, 'leaveTypePerUser']);
 });
